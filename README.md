@@ -1,4 +1,5 @@
-#Summary
+## Summary
+
 A client Web application. Yet to deploy locally.
 
 1. The web app first gets all the upcoming events in the Calendar using the Google Calendar API and list them neatly in a readable manner.
