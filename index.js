@@ -81,15 +81,20 @@ function createEvent(auth) {
   const event = {
     summary: "Meeting with Prof. Michael Collins",
     location: "8888 University Dr, Burnaby, BC V5A 1S6",
+    description: "Presenter: Prof. Michael Collins",
     start: {
-      dateTime: "2019-02-06T09:00:00-08:00",
+      dateTime: "2019-02-06T08:00:00-08:00",
       timeZone: "America/Los_Angeles"
     },
     end: {
-      dateTime: "2019-02-06T17:00:00-07:00",
+      dateTime: "2019-02-06T08:30:00-08:00",
       timeZone: "America/Los_Angeles"
     },
-    attendees: [{ email: "anaveed@sfu.ca" }, { email: "asindhar@sfu.ca" }],
+    attendees: [
+      { email: "anaveed@sfu.ca", displayName: "Ahsan Naveed" },
+      { email: "asindhar@sfu.ca", displayName: "Amandeep Sindhar" },
+      { email: "mcollins@sfu.ca", displayName: "Prof. Michael Collins" }
+    ],
     reminders: {
       useDefault: false,
       overrides: [
@@ -137,6 +142,34 @@ function createEvent(auth) {
         return;
       }
       console.log("Event created: %s", res.data.htmlLink);
+
+      // Note: to make Prof. Michael Collins the organizer
+      // we need to move the event ot his calendar for this
+      // task we need:
+      // CalendearId: Calendar identifier of the source calendar where the event currently is on.
+      // eventId: Event identifier.
+      // destinationId: Calendar identifier of the target calendar where the event is to be moved to.
+
+      // It is clear from the above that we don't have Prof's calenderId but for the sake of completion
+      // let us assume we are given this Id then we will make another API call wiht `move` operation:
+
+      // calendar.events.move(
+      //   {
+      //     calendarId: res.data.iCalUID,
+      //     eventId: res.data.id
+      //     destination: "string"
+      //   },
+      //   (err, res) => {
+      //     if (err) {
+      //       console.log(
+      //         "There was an error contacting the destination Calendar service: " + err
+      //       );
+      //       return;
+      //     }
+      //     console.log("Event moved: %s", res.data.htmlLink);
+      //     console.log("Event organizer: %s", res.data.organizer.displayName);
+      //   }
+      // );
     }
   );
 }
